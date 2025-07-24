@@ -11,7 +11,10 @@ const app = express();
 app.use(cookieParser());
 
 if (process.env.CLIENT_URL != null) {
-  app.use(cors({ origin: [process.env.CLIENT_URL], credentials: true }));
+  app.use(cors({
+    origin: process.env.CLIENT_URL,
+    credentials: true
+  }));
 }
 
 app.use(express.json());
