@@ -3,9 +3,6 @@ import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
 import { RouterProvider, createBrowserRouter } from "react-router";
 
-// Import the main CSS file
-import "./app.css";
-
 // Import the main app component
 import App from "./App";
 import About from "./pages/About";
