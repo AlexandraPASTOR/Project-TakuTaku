@@ -1,0 +1,22 @@
+{
+  "builds": [
+    {
+      "src": "vite.config.ts",
+      "use": "@vercel/static-build"
+    }
+  ],
+  "routes": [
+    {
+      "src": "/api/(.*)",
+      "dest": "https://project-takutaku.onrender.com/api/$1",
+      "headers": {
+        "Access-Control-Allow-Origin": "https://takutaku.vercel.app",
+        "Access-Control-Allow-Credentials": "true"
+      }
+    },
+    {
+      "src": "/(.*)",
+      "dest": "/index.html"
+    }
+  ]
+}
