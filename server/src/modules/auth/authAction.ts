@@ -107,7 +107,10 @@ const signOut = async (_req: Request, res: Response): Promise<any> => {
   res
     .clearCookie("token", {
       httpOnly: true,
-      secure: process.env.NODE_ENV === "production",
+      secure: true,
+      sameSite: "none",
+      path: "/",
+      maxAge: 0, // Supprimer le cookie en définissant sa durée de vie
     })
     .send({ message: "Déconnexion réussie" });
 };

@@ -88,7 +88,7 @@ function AnimeManagement() {
                 {/* Bouton "change" relié à la fonction modification */}
                 <button type="button" onClick={() => setEditAnime(anime)}>
                   <img
-                    src="./public/change.png"
+                    src="/change.png"
                     alt="modifier"
                     className="w-4 cursor-pointer"
                   />
@@ -106,7 +106,7 @@ function AnimeManagement() {
             {/* Logo TakuTaku */}
             <section className="text-center mb-10">
               <img
-                src="/public/logo_taku.png"
+                src="/logo_taku.png"
                 alt="Logo TakuTaku"
                 className="mx-auto h-15"
               />
