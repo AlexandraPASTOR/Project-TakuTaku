@@ -65,7 +65,7 @@ npm start
 
 ## 🌐 Démo en ligne  
 
-🔹 Frontend : (à venir)
+🔹 Frontend : https://takutaku.vercel.app
 
 🔹 Backend API : https://project-takutaku.onrender.com
 
