@@ -36,6 +36,7 @@ const signIn = async (request: Request, response: Response): Promise<any> => {
   .cookie("token", token, {
     httpOnly: true, // Le cookie est accessible uniquement par le serveur
     secure: process.env.NODE_ENV === "production", // Le cookie est sécurisé en production
+    sameSite: "none", // Le cookie est envoyé uniquement pour les requêtes du même site
     maxAge: 24 * 60 * 60 * 1000, // Durée de vie du cookie (1 jour)
   })
   .send({
@@ -85,11 +86,18 @@ const signUp = async (request: Request, response: Response): Promise<any> => {
   const token = jwt.sign({ id: userId, is_admin : is_admin }, tokenKey);
   // Envoie au client un message de succees, le token dauthentification (JWT) et l'identifiant du nouvel utilisateur
   // Renvoyer tout l'objet user + token
-  response.send({
+  response
+  .cookie("token", token, {
+    httpOnly: true,
+    secure: process.env.NODE_ENV === "production",
+    sameSite: "none", // ✅ indispensable pour Vercel ↔ Render
+    maxAge: 24 * 60 * 60 * 1000,
+  })
+  .send({
     message: "Utilisateur inscrit avec succès",
     userId,
-    token,
   });
+
 };
 
   // Deconnexion d'un utilisateur (sign out)
