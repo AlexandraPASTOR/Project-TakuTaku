@@ -83,7 +83,7 @@ function Favorite() {
   }
 
   return (
-    <section className="mx-10 mt-16">
+    <section className="mx-10 mt-25 md:mt-16">
       <h1 className="text-tertiary text-xl mb-3 uppercase">
         Mes Animes Favoris
       </h1>
