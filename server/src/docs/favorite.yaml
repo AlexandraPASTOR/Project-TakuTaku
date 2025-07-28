@@ -1,0 +1,120 @@
+paths:
+  /api/favorite_anime/{user_id}:
+    get:
+      tags: [Favorite]
+      summary: Obtenir les favoris d'un utilisateur
+      parameters:
+        - name: user_id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Liste des favoris trouvée
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Favorite'
+        '403':
+          description: Accès interdit
+        '404':
+          description: Aucun favori trouvé
+
+/api/favorite_anime/{user_id}/{anime_id}:
+  get:
+    tags: [Favorite]
+    summary: Obtenir un favori spécifique
+    parameters:
+      - name: user_id
+        in: path
+        required: true
+        schema:
+          type: integer
+      - name: anime_id
+        in: path
+        required: true
+        schema:
+          type: integer
+    responses:
+      '200':
+        description: Favori trouvé
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Favorite'
+      '403':
+        description: Accès interdit
+      '404':
+        description: Favori non trouvé
+
+  delete:
+    tags: [Favorite]
+    summary: Supprimer un favori
+    parameters:
+      - name: user_id
+        in: path
+        required: true
+        schema:
+          type: integer
+      - name: anime_id
+        in: path
+        required: true
+        schema:
+          type: integer
+    responses:
+      '204':
+        description: Favori supprimé
+      '404':
+        description: Favori non trouvé
+
+/api/favorite_anime:
+    post:
+      tags: [Favorite]
+      summary: Ajouter un anime aux favoris
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/NewFavorite'
+      responses:
+        '201':
+          description: Favori ajouté
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  insertFavorite:
+                    type: object
+                    $ref: '#/components/schemas/Favorite'
+        '400':
+          description: Erreur d'insertion
+
+components:
+  schemas:
+    Favorite:
+      type: object
+      properties:
+        user_id:
+          type: integer
+          example: 1
+        anime_id:
+          type: integer
+          example: 42
+
+    NewFavorite:
+      type: object
+      required:
+        - user_id
+        - anime_id
+      properties:
+        user_id:
+          type: integer
+          example: 1
+        anime_id:
+          type: integer
+          example: 42

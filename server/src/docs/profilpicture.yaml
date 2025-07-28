@@ -1,0 +1,97 @@
+paths:
+  /api/user/profilpicture:
+    get:
+      tags: [ProfilPicture]
+      summary: Récupérer toutes les images de profil disponibles
+      security:
+        - cookieAuth: []
+      responses:
+        '200':
+          description: Liste des images de profil
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ProfilPicture'
+        '404':
+          description: Aucune image de profil trouvée
+
+    put:
+      tags: [ProfilPicture]
+      summary: Modifier l’image de profil d’un utilisateur
+      security:
+        - cookieAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - id
+                - profilpicture_id
+              properties:
+                id:
+                  type: integer
+                  example: 5
+                profilpicture_id:
+                  type: integer
+                  example: 3
+      responses:
+        '200':
+          description: Image de profil mise à jour
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                  profilpicture_id:
+                    type: integer
+        '404':
+          description: Utilisateur non trouvé
+
+  /api/user/profilpicture/{id}:
+    get:
+      tags: [ProfilPicture]
+      summary: Récupérer l’image de profil d’un utilisateur
+      security:
+        - cookieAuth: []
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+          description: ID de l'utilisateur
+      responses:
+        '200':
+          description: Image de profil de l’utilisateur
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProfilPicture'
+        '403':
+          description: Accès interdit
+        '404':
+          description: Image de profil non trouvée
+
+components:
+  schemas:
+    ProfilPicture:
+      type: object
+      properties:
+        id:
+          type: integer
+          example: 1
+        url:
+          type: string
+          example: "https://example.com/images/avatar1.png"
+
+securitySchemes:
+  cookieAuth:
+    type: apiKey
+    in: cookie
+    name: token

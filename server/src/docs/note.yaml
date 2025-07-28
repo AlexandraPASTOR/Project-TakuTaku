@@ -1,0 +1,193 @@
+paths:
+  /api/note:
+    get:
+      tags: [Note]
+      summary: Lister toutes les notes
+      responses:
+        '200':
+          description: Liste des notes
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Note'
+        '404':
+          description: Aucune note trouvée
+
+    post:
+      tags: [Note]
+      summary: Ajouter une nouvelle note
+      security:
+        - cookieAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/NewNote'
+      responses:
+        '201':
+          description: Note ajoutée
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  insertId:
+                    type: integer
+                    example: 1
+        '404':
+          description: Erreur lors de l'insertion
+
+  /api/note/{anime_id}/average:
+    get:
+      tags: [Note]
+      summary: Obtenir la note moyenne d’un anime
+      parameters:
+        - name: anime_id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Note moyenne
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  average:
+                    type: number
+                    format: float
+                    example: 3.8
+        '404':
+          description: Note moyenne non trouvée
+
+  /api/note/{anime_id}/{user_id}:
+    get:
+      tags: [Note]
+      summary: Lire la note d’un utilisateur pour un anime
+      security:
+        - cookieAuth: []
+      parameters:
+        - name: anime_id
+          in: path
+          required: true
+          schema:
+            type: integer
+        - name: user_id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Note trouvée ou message si non noté
+        '403':
+          description: Accès interdit
+
+    put:
+      tags: [Note]
+      summary: Modifier la note d’un utilisateur pour un anime
+      security:
+        - cookieAuth: []
+      parameters:
+        - name: anime_id
+          in: path
+          required: true
+          schema:
+            type: integer
+        - name: user_id
+          in: path
+          required: true
+          schema:
+            type: integer
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                note:
+                  type: number
+                  example: 4
+      responses:
+        '200':
+          description: Note mise à jour
+        '403':
+          description: Accès interdit
+        '404':
+          description: Note non trouvée
+
+    delete:
+      tags: [Note]
+      summary: Supprimer une note d’utilisateur pour un anime
+      security:
+        - cookieAuth: []
+      parameters:
+        - name: anime_id
+          in: path
+          required: true
+          schema:
+            type: integer
+        - name: user_id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '204':
+          description: Note supprimée
+        '403':
+          description: Accès interdit
+        '404':
+          description: Note non trouvée
+
+components:
+  schemas:
+    Note:
+      type: object
+      properties:
+        id:
+          type: integer
+          example: 1
+        note:
+          type: number
+          example: 5
+        user_id:
+          type: integer
+          example: 2
+        anime_id:
+          type: integer
+          example: 7
+
+    NewNote:
+      type: object
+      required:
+        - note
+        - user_id
+        - anime_id
+      properties:
+        note:
+          type: number
+          example: 4
+        user_id:
+          type: integer
+          example: 2
+        anime_id:
+          type: integer
+          example: 7
+
+securitySchemes:
+  cookieAuth:
+    type: apiKey
+    in: cookie
+    name: token

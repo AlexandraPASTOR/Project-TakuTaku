@@ -69,9 +69,11 @@ npm start
 
 🔹 Backend API : https://project-takutaku.onrender.com
 
+---
+
 ## 📚 Documentation API  
 
-La documentation Swagger est disponible ici :
+La documentation Swagger est disponible ici : https://project-takutaku.onrender.com/api-docs
 
 ---
 

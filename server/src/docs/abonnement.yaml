@@ -1,0 +1,118 @@
+paths:
+  /api/abonnement:
+    get:
+      tags: [Abonnement]
+      summary: Récupérer tous les abonnements
+      responses:
+        '200':
+          description: Liste des abonnements
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Abonnement'
+        '404':
+          description: Aucun abonnement trouvé
+
+    post:
+      tags: [Abonnement]
+      summary: Créer un nouvel abonnement
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/NewAbonnement'
+      responses:
+        '201':
+          description: Abonnement créé
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  insertId:
+                    type: integer
+                    example: 3
+        '400':
+          description: Données invalides ou insertion échouée
+
+  /api/abonnement/{id}:
+    get:
+      tags: [Abonnement]
+      summary: Récupérer un abonnement par ID
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Abonnement trouvé
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Abonnement'
+        '404':
+          description: Abonnement non trouvé
+
+    put:
+      tags: [Abonnement]
+      summary: Mettre à jour un abonnement par ID
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/NewAbonnement'
+      responses:
+        '204':
+          description: Mise à jour réussie (aucun contenu)
+        '404':
+          description: Abonnement non trouvé
+
+    delete:
+      tags: [Abonnement]
+      summary: Supprimer un abonnement par ID
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+      responses:
+        '204':
+          description: Suppression réussie (aucun contenu)
+        '404':
+          description: Abonnement non trouvé
+
+components:
+  schemas:
+    Abonnement:
+      type: object
+      properties:
+        id:
+          type: integer
+          example: 1
+        name:
+          type: string
+          enum: [découverte, premium]
+          example: découverte
+
+    NewAbonnement:
+      type: object
+      required:
+        - name
+      properties:
+        name:
+          type: string
+          enum: [découverte, premium]
+          example: premium

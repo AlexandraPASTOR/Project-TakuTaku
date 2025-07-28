@@ -1,0 +1,18 @@
+paths:
+  /api:
+    get:
+      summary: Message de bienvenue
+      description: Renvoie un message de bienvenue pour vérifier que l'API TakuTaku fonctionne.
+      tags:
+        - Root
+      responses:
+        '200':
+          description: Succès
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: Bienvenue sur l'API TakuTaku !

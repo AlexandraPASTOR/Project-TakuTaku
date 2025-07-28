@@ -1,0 +1,120 @@
+paths:
+  /api/type:
+    get:
+      tags: [Type]
+      summary: Récupérer tous les types
+      responses:
+        '200':
+          description: Liste des types
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Type'
+        '404':
+          description: Aucun type trouvé
+
+    post:
+      tags: [Type]
+      summary: Créer un nouveau type
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - name
+              properties:
+                name:
+                  type: string
+                  example: Shonen
+      responses:
+        '201':
+          description: Type créé avec succès
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: integer
+        '400':
+          description: Mauvaise requête
+
+  /api/type/{id}:
+    get:
+      tags: [Type]
+      summary: Récupérer un type par son ID
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+          description: ID du type
+      responses:
+        '200':
+          description: Type trouvé
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Type'
+        '404':
+          description: Type non trouvé
+
+    put:
+      tags: [Type]
+      summary: Mettre à jour un type par son ID
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - name
+              properties:
+                name:
+                  type: string
+                  example: Seinen
+      responses:
+        '204':
+          description: Type mis à jour
+        '404':
+          description: Type non trouvé
+
+    delete:
+      tags: [Type]
+      summary: Supprimer un type par son ID
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+          description: ID du type
+      responses:
+        '204':
+          description: Type supprimé
+        '404':
+          description: Type non trouvé
+
+components:
+  schemas:
+    Type:
+      type: object
+      properties:
+        id:
+          type: integer
+          example: 1
+        name:
+          type: string
+          example: Shonen

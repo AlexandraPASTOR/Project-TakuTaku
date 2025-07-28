@@ -1,0 +1,131 @@
+paths:
+  /api/season:
+    get:
+      tags: [Season]
+      summary: Récupérer toutes les saisons
+      responses:
+        '200':
+          description: Liste des saisons
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Season'
+        '404':
+          description: Aucune saison trouvée
+
+    post:
+      tags: [Season]
+      summary: Créer une nouvelle saison
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - number
+                - anime_id
+              properties:
+                number:
+                  type: integer
+                  example: 1
+                anime_id:
+                  type: integer
+                  example: 3
+      responses:
+        '201':
+          description: Saison créée
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  insertId:
+                    type: integer
+        '400':
+          description: Mauvaise requête
+
+  /api/season/{id}:
+    get:
+      tags: [Season]
+      summary: Récupérer une saison par son ID
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+          description: ID de la saison
+      responses:
+        '200':
+          description: Saison trouvée
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Season'
+        '404':
+          description: Saison non trouvée
+
+    put:
+      tags: [Season]
+      summary: Modifier une saison par son ID
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - number
+                - anime_id
+              properties:
+                number:
+                  type: integer
+                  example: 2
+                anime_id:
+                  type: integer
+                  example: 4
+      responses:
+        '204':
+          description: Saison mise à jour
+        '404':
+          description: Saison non trouvée
+
+    delete:
+      tags: [Season]
+      summary: Supprimer une saison par son ID
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+          description: ID de la saison
+      responses:
+        '204':
+          description: Saison supprimée
+        '404':
+          description: Saison non trouvée
+
+components:
+  schemas:
+    Season:
+      type: object
+      properties:
+        id:
+          type: integer
+          example: 1
+        number:
+          type: integer
+          example: 1
+        anime_id:
+          type: integer
+          example: 3

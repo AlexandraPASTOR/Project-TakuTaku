@@ -1,0 +1,133 @@
+paths:
+  /api/episode:
+    get:
+      tags: [Episode]
+      summary: Récupérer tous les épisodes
+      responses:
+        '200':
+          description: Liste des épisodes
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Episode'
+        '404':
+          description: Aucun épisode trouvé
+
+    post:
+      tags: [Episode]
+      summary: Ajouter un nouvel épisode
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/NewEpisode'
+      responses:
+        '201':
+          description: Épisode créé avec succès
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  insertId:
+                    type: integer
+                    example: 12
+        '400':
+          description: Erreur d'insertion
+
+  /api/episode/{id}:
+    get:
+      tags: [Episode]
+      summary: Récupérer un épisode par ID
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Épisode trouvé
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Episode'
+        '404':
+          description: Épisode non trouvé
+
+    put:
+      tags: [Episode]
+      summary: Modifier un épisode par ID
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/NewEpisode'
+      responses:
+        '204':
+          description: Épisode modifié
+        '404':
+          description: Épisode non trouvé
+
+    delete:
+      tags: [Episode]
+      summary: Supprimer un épisode par ID
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '204':
+          description: Épisode supprimé
+        '404':
+          description: Épisode non trouvé
+
+components:
+  schemas:
+    Episode:
+      type: object
+      properties:
+        id:
+          type: integer
+          example: 1
+        number:
+          type: integer
+          example: 3
+        title:
+          type: string
+          example: "Le retour du héros"
+        synopsis:
+          type: string
+          example: "Le héros revient sur le champ de bataille après sa défaite."
+        season_id:
+          type: integer
+          example: 2
+
+    NewEpisode:
+      type: object
+      required:
+        - number
+        - title
+        - synopsis
+        - season_id
+      properties:
+        number:
+          type: integer
+        title:
+          type: string
+        synopsis:
+          type: string
+        season_id:
+          type: integer

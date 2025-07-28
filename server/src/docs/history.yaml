@@ -1,0 +1,85 @@
+paths:
+  /api/user/{id}/history:
+    get:
+      tags: [History]
+      summary: Récupérer l'historique de visionnage d'un utilisateur
+      security:
+        - cookieAuth: []
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+          description: ID de l'utilisateur
+      responses:
+        '200':
+          description: Historique récupéré
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/History'
+        '403':
+          description: Accès interdit
+        '404':
+          description: Aucun historique trouvé
+
+  /api/history:
+    post:
+      tags: [History]
+      summary: Ajouter un animé à l'historique d'un utilisateur
+      security:
+        - cookieAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/NewHistory'
+      responses:
+        '200':
+          description: Historique mis à jour
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/History'
+        '400':
+          description: Données invalides
+        '403':
+          description: Accès interdit
+
+components:
+  schemas:
+    History:
+      type: object
+      properties:
+        id:
+          type: integer
+          example: 5
+        user_id:
+          type: integer
+          example: 2
+        anime_id:
+          type: integer
+          example: 14
+
+    NewHistory:
+      type: object
+      required:
+        - user_id
+        - anime_id
+      properties:
+        userId:
+          type: integer
+          example: 2
+        animeId:
+          type: integer
+          example: 14
+
+securitySchemes:
+  cookieAuth:
+    type: apiKey
+    in: cookie
+    name: token

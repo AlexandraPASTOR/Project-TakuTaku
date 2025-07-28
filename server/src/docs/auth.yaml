@@ -1,0 +1,132 @@
+paths:
+  /api/auth/signin:
+    post:
+      tags: [Auth]
+      summary: Connexion d'un utilisateur
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - mail
+                - password
+              properties:
+                mail:
+                  type: string
+                  format: email
+                  example: user@example.com
+                password:
+                  type: string
+                  example: motdepasse123
+      responses:
+        '200':
+          description: Utilisateur connecté
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: Utilisateur connecté
+                  user:
+                    type: object
+                    properties:
+                      id:
+                        type: integer
+                        example: 1
+                      firstname:
+                        type: string
+                        example: Jean
+                      lastname:
+                        type: string
+                        example: Dupont
+                      mail:
+                        type: string
+                        format: email
+                        example: user@example.com
+                      abonnement_id:
+                        type: integer
+                        example: 2
+                      is_admin:
+                        type: boolean
+                        example: false
+                      is_actif:
+                        type: boolean
+                        example: true
+        '401':
+          description: Erreur d'authentification
+
+  /api/auth/signup:
+    post:
+      tags: [Auth]
+      summary: Inscription d'un nouvel utilisateur
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - firstname
+                - lastname
+                - mail
+                - password
+                - abonnement_id
+              properties:
+                firstname:
+                  type: string
+                  example: Alice
+                lastname:
+                  type: string
+                  example: Martin
+                mail:
+                  type: string
+                  format: email
+                  example: alice@example.com
+                password:
+                  type: string
+                  example: azerty123
+                abonnement_id:
+                  type: integer
+                  example: 1
+                is_admin:
+                  type: boolean
+                  example: false
+                is_actif:
+                  type: boolean
+                  example: true
+      responses:
+        '200':
+          description: Utilisateur inscrit avec succès
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: Utilisateur inscrit avec succès
+                  userId:
+                    type: integer
+                    example: 5
+        '500':
+          description: Utilisateur créé mais non retrouvé
+
+  /api/auth/signout:
+    post:
+      tags: [Auth]
+      summary: Déconnexion de l'utilisateur
+      responses:
+        '200':
+          description: Déconnexion réussie
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: Déconnexion réussie

@@ -1,0 +1,210 @@
+paths:
+  /api/anime:
+    get:
+      tags: [Anime]
+      summary: Récupérer tous les animés
+      responses:
+        '200':
+          description: Liste des animés
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Anime'
+        '404':
+          description: Aucun animé trouvé
+
+    post:
+      tags: [Anime]
+      summary: Ajouter un nouvel animé
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/NewAnime'
+      responses:
+        '201':
+          description: Animé créé
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  insertId:
+                    type: integer
+                    example: 42
+        '400':
+          description: Erreur d'insertion
+
+  /api/anime/{id}:
+    get:
+      tags: [Anime]
+      summary: Récupérer un animé par ID
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: integer
+          required: true
+      responses:
+        '200':
+          description: Animé trouvé
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Anime'
+        '404':
+          description: Animé non trouvé
+
+    put:
+      tags: [Anime]
+      summary: Modifier un animé par ID
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: integer
+          required: true
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/NewAnime'
+      responses:
+        '204':
+          description: Modifié avec succès
+        '404':
+          description: Animé non trouvé
+
+    delete:
+      tags: [Anime]
+      summary: Supprimer un animé par ID
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: integer
+          required: true
+      responses:
+        '204':
+          description: Supprimé avec succès
+        '404':
+          description: Animé non trouvé
+
+  /api/anime_with_genre:
+    get:
+      tags: [Anime]
+      summary: Récupérer tous les animés avec leur genre
+      responses:
+        '200':
+          description: OK
+        '404':
+          description: Aucun animé trouvé
+
+  /api/anime_with_note:
+    get:
+      tags: [Anime]
+      summary: Récupérer tous les animés avec leur note moyenne
+      responses:
+        '200':
+          description: OK
+        '404':
+          description: Aucun animé trouvé
+
+  /api/animetype/{genre}/{type}:
+    get:
+      tags: [Anime]
+      summary: Récupérer les animés par genre et type
+      parameters:
+        - in: path
+          name: genre
+          schema:
+            type: string
+          required: true
+        - in: path
+          name: type
+          schema:
+            type: string
+          required: true
+      responses:
+        '200':
+          description: Liste filtrée
+        '404':
+          description: Aucun animé trouvé
+
+components:
+  schemas:
+    Anime:
+      type: object
+      properties:
+        id:
+          type: integer
+          example: 1
+        title:
+          type: string
+          example: Fullmetal Alchemist
+        synopsis:
+          type: string
+          example: Deux frères alchimistes cherchent la pierre philosophale.
+        portrait:
+          type: string
+          example: /images/anime/fma.jpg
+        date:
+          type: integer
+          example: 2003
+        landscape:
+          type: string
+          example: /images/anime/fma-wide.jpg
+        video:
+          type: string
+          example: https://youtube.com/watch?v=123456
+        genre_id:
+          type: integer
+          example: 2
+        genre_name:
+          type: string
+          example: Action
+        note:
+          type: number
+          format: float
+          example: 4.5
+        types:
+          type: array
+          items:
+            type: object
+            properties:
+              id:
+                type: integer
+              name:
+                type: string
+
+    NewAnime:
+      type: object
+      required:
+        - title
+        - synopsis
+        - portrait
+        - date
+        - landscape
+        - video
+        - genre_id
+      properties:
+        title:
+          type: string
+        synopsis:
+          type: string
+        portrait:
+          type: string
+        date:
+          type: integer
+        landscape:
+          type: string
+        video:
+          type: string
+        genre_name:
+          type: string
+        genre_id:
+          type: integer
