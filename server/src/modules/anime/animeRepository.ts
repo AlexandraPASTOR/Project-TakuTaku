@@ -34,6 +34,12 @@ class AnimeRepository {
     return result.insertId; //Retourne l'ID du nouvel animé inséré
   }
 
+    // Le R du CRUD - Read All : Lire tous les animés
+  async readAll() {
+    const [rows] = await databaseClient.query<Rows>("SELECT * FROM anime");
+    return rows as Anime[]; // Retourne le tableau d'animés
+  }
+  
   // Le R du CRUD - Read : Lire un animé spécifique par son ID
   async read(id: number) {
     const [animeRows] = await databaseClient.query<Rows>(
@@ -53,12 +59,6 @@ class AnimeRepository {
     ); // Récupère le nom de genre via genre_id
 
     return { ...anime, types: typeRows, genre: genreRows[0] }; // Retourne l'objet complet
-  }
-
-  // Le R du CRUD - Read All : Lire tous les animés
-  async readAll() {
-    const [rows] = await databaseClient.query<Rows>("SELECT * FROM anime");
-    return rows as Anime[]; // Retourne le tableau d'animés
   }
 
  // Le U du CRUD - Update : Mettre à jour un animé existant
