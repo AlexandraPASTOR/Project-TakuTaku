@@ -33,8 +33,7 @@ TakuTaku est une plateforme web de streaming d’animés qui propose deux types 
 - Frontend : React, Vite, Tailwind CSS  
 - Backend : Node.js, Express  
 - Base de données : MySQL  
-- Authentification sécurisée (JWT ou sessions)  
-- Déploiement : Frontend & Backend prévus sur Vercel (à confirmer)
+- Authentification sécurisée
 
 ---
 
