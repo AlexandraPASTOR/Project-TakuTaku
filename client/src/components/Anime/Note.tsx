@@ -181,13 +181,13 @@ function Note() {
               onClick={() => toggleRating(star)}
               onMouseEnter={() => setHoveredRating(star)}
               onMouseLeave={() => setHoveredRating(null)}
+              aria-label={`Donner ${star} étoile${star > 1 ? "s" : ""}`}
               className={`transition transform duration-200 hover:scale-110 focus:scale-110 cursor-pointer ${
                 activeRating !== null && star <= Math.round(activeRating)
                   ? "text-yellow-300"
                   : "text-gray-400"
               }`}
             >
-              {/* biome-ignore lint/a11y/noSvgWithoutTitle: <explanation> */}
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 width="24"

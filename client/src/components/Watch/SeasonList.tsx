@@ -47,25 +47,30 @@ function SeasonList({ onSeasonSelect }: SeasonListProps) {
   }, [filteredSeasons, selectedSeason, onSeasonSelect]); // Définit la saison 1 par défaut si aucune saison n'est sélectionnée
 
   return (
-    <section className="flex flex-wrap gap-4 p-4">
-      {filteredSeasons.map((season) => (
-        <div key={season.id}>
-          <button
-            type="button"
-            onClick={() => {
-              setSelectedSeason(season);
-              onSeasonSelect(season);
-            }}
-            className={`text-tertiary font-semibold border-b-2 transition-colors duration-300 text-lg cursor-pointer
-        ${selectedSeason?.id === season.id ? "border-secondary" : "hover:border-tertiary border-transparent"}
-
-      `}
-          >
-            Saison {season.number}
-          </button>
-        </div>
-      ))}
-    </section>
+    <>
+      {filteredSeasons.length > 0 ? (
+        <section className="flex flex-wrap gap-4 p-4">
+          {filteredSeasons.map((season) => (
+            <div key={season.id}>
+              <button
+                type="button"
+                onClick={() => {
+                  setSelectedSeason(season);
+                  onSeasonSelect(season);
+                }}
+                className={`text-tertiary font-semibold border-b-2 transition-colors duration-300 text-lg cursor-pointer
+          ${selectedSeason?.id === season.id ? "border-secondary" : "hover:border-tertiary border-transparent"}
+        `}
+              >
+                Saison {season.number}
+              </button>
+            </div>
+          ))}
+        </section>
+      ) : (
+        <p className="text-tertiary p-4">Aucune saison disponible pour cet anime.</p>
+      )}
+    </>
   );
 }
 

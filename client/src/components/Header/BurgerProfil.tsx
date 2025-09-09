@@ -27,6 +27,7 @@ function BurgerProfil({
     >
       <button
         onClick={onClose}
+        aria-label="Fermer le menu"
         className="absolute top-4 right-4 text-2xl text-tertiary cursor-pointer"
       >
         <span className="absolute  h-0.5 w-8 bg-tertiary rotate-45 top-4 right-0" />

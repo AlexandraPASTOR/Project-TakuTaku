@@ -45,14 +45,14 @@ function Footer({ setChaosMode }: { setChaosMode: (value: boolean) => void }) {
       </section>
 
       {/* Centre */}
-      <section className="text-center text-xs md:text-sm pb-1">
-        <section>
+      <section className="text-center text-sm pb-1">
+        <section className="mb-1">
           <Link to="/cgv">CGV</Link>
         </section>
-        <section>
+        <section className="mb-1">
           <Link to="/legal-notices">Mentions légales</Link>
         </section>
-        <section>
+        <section className="mb-1">
           <Link to="/about">A propos de TakuTaku</Link>
         </section>
 

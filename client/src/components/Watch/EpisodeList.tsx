@@ -65,6 +65,7 @@ function EpisodeList({
 
   return (
     <section>
+      {filteredEpisodes.length > 0 ? (
       <ul className="flex flex-col gap-4 p-4 md:flex-row md:flex-wrap">
         {filteredEpisodes.map((episode) => (
           <li key={episode.id} className="flex md:flex-col md:w-[200px] gap-2">
@@ -89,7 +90,9 @@ function EpisodeList({
             </button>
           </li>
         ))}
-      </ul>
+      </ul> )
+      : (<p className="text-tertiary p-4">Aucun épisode disponible pour cette saison.</p>
+      )}
     </section>
   );
 }

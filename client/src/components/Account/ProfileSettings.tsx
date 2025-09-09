@@ -125,7 +125,8 @@ function ProfileSettings() {
           {editMode && (
             <button
               type="submit"
-              className="border border-tertiary rounded-full text-secondary my-2 p-2 cursor-pointer hover:scale-110 transition-transform duration-300"
+              className="border border-tertiary rounded-full text-secondary my-2 p-2 
+              cursor-pointer hover:scale-110 transition-transform duration-300"
             >
               Enregistrer
             </button>
