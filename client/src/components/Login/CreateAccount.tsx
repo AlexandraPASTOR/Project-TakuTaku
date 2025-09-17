@@ -36,6 +36,20 @@ function CreateAccount({
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+
+     // Vérif email avec regex simple
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  if (!emailRegex.test(newaccount.mail)) {
+    toast.error("Adresse e-mail invalide");
+    return;
+  }
+
+  // Vérif longueur minimale du mot de passe
+  if (newaccount.password.length < 5) {
+    toast.error("Le mot de passe doit contenir au moins 5 caractères");
+    return;
+  }
+  
     setShowPayment(true); // affiche le paiement intégré
   };
 
