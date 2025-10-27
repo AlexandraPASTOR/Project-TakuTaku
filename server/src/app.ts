@@ -22,6 +22,9 @@ app.use(cookieParser());
     allowedHeaders: ['Content-Type', 'Authorization']
   }));
 
+  console.log("CORS allowed origin:", process.env.CLIENT_URL);
+
+
 // Middleware pour accepter différents types de requêtes
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
