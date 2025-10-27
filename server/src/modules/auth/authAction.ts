@@ -79,16 +79,13 @@ const signUp = async (request: Request, response: Response): Promise<any> => {
     1, // profilpicture_id par défaut
   );
 
-response.setHeader("Access-Control-Allow-Origin", process.env.CLIENT_URL!);
-response.setHeader("Access-Control-Allow-Credentials", "true");
- response.setHeader("Vary", "Origin"); // ✅ anti Cloudflare/Render
-
   if (!userId) {
     return response
       .status(500)
       .send({ message: "Utilisateur créé mais non retrouvé" });
   }
-  response
+
+  return response
   .send({
     message: "Utilisateur inscrit avec succès",
     userId,
