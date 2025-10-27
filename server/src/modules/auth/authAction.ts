@@ -81,6 +81,7 @@ const signUp = async (request: Request, response: Response): Promise<any> => {
 
 response.setHeader("Access-Control-Allow-Origin", process.env.CLIENT_URL!);
 response.setHeader("Access-Control-Allow-Credentials", "true");
+ response.setHeader("Vary", "Origin"); // ✅ anti Cloudflare/Render
 
   if (!userId) {
     return response
