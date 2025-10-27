@@ -7,17 +7,11 @@ interface JwtPayload extends DefaultJwtPayload {
   is_admin: boolean;
 }
 
-const allowCors = (res: Response) => {
-  res.setHeader("Access-Control-Allow-Origin", process.env.CLIENT_URL!);
-  res.setHeader("Access-Control-Allow-Credentials", "true");
-};
-
 //Middleware qui protège une route on vérifie si le token a été envoyé par le client et s'il est valide (il reçoit tous les objets req,res,next)
 export const checkToken = async (req: Request, res: Response, next: NextFunction): Promise<void>  => {
   const token = req.cookies.token; // on récupère le token dans le cookie
 
   if (!token) {
-    allowCors(res);
     res.status(401).send({ message: "Accès non autorisé : Token manquant" });
     return;
   } 
@@ -25,7 +19,6 @@ export const checkToken = async (req: Request, res: Response, next: NextFunction
   try {
     const decoded = jwt.verify(token, process.env.JWT_SECRET as string) as JwtPayload;
     if (!decoded || !decoded.id) {
-      allowCors(res);
       console.error("Erreur de vérification du token");
       res.status(401).send({ message: "Token invalide" });
       return;
@@ -34,7 +27,6 @@ req.user = decoded;
     next();
   } catch (err) {
     console.error("Erreur de vérification du token :", err);
-    allowCors(res);
     res.status(401).send({ message: "Token invalide" });
   }
 };
