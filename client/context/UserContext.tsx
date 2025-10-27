@@ -63,7 +63,6 @@ export const UserProvider = ({ children }: { children: React.ReactNode }) => {
           headers: {
             "Content-Type": "application/json",
           },
-          credentials: "omit", // on ne s'identifie pas encore
           body: JSON.stringify(newUser),
         },
       );
