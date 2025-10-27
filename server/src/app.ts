@@ -25,13 +25,6 @@ app.use(((req, res, next) => {
   next();
 }) as express.RequestHandler);
 
-
-// Configuration CORS qui permet les requêtes depuis le client
-  app.use(cors({
-    origin: process.env.CLIENT_URL,
-    credentials: true,
-  }));
-
 // Middleware pour parser les cookies
 app.use(cookieParser());
 
