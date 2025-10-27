@@ -12,14 +12,13 @@ import swaggerSpec from './swagger';
 const app = express();
 
 // Middleware CORS pour autoriser les requêtes provenant du client
-app.use(
-  cors({
-    origin: process.env.CLIENT_URL,  
-    credentials: true,                
-    methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
-    allowedHeaders: ["Content-Type", "Authorization"], 
-  })
-);
+app.use((req, res, next) => {
+  res.header("Access-Control-Allow-Origin", process.env.CLIENT_URL);
+  res.header("Access-Control-Allow-Credentials", "true");
+  next();
+});
+
+app.options("*", cors());
 
 // Middleware pour parser les cookies
 app.use(cookieParser());
