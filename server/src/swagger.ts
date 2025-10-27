@@ -9,7 +9,6 @@ const options: swaggerJSDoc.Options = {
       description: 'Documentation de l\'API de l\'application TakuTaku',
     },
     servers: [
-      { url: 'http://localhost:3310' },
       { url: 'https://project-takutaku.onrender.com' },
     ],
     tags: [
