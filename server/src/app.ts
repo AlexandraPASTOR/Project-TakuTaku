@@ -11,29 +11,15 @@ import swaggerSpec from './swagger';
 // Initialisation de l'application Express
 const app = express();
 
-// ✅ CORS GLOBAL, tout en haut avant cookieParser, router, etc.
-app.use(((req, res, next) => {
-   console.log("✅ CORS middleware ACTIF");
-  const allowedOrigin = process.env.CLIENT_URL!;
-  
-  res.setHeader("Access-Control-Allow-Origin", allowedOrigin);
-  res.setHeader("Access-Control-Allow-Credentials", "true");
-  res.setHeader("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS");
-res.setHeader(
-  "Access-Control-Allow-Headers",
-  "Content-Type, Authorization, Origin"
+// Middleware CORS pour autoriser les requêtes provenant du client
+app.use(
+  cors({
+    origin: process.env.CLIENT_URL,  
+    credentials: true,                
+    methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+    allowedHeaders: ["Content-Type", "Authorization"], 
+  })
 );
-  
-  // ✅ Fix pour Cloudflare/Render
-  res.setHeader("Vary", "Origin");
-
-  if (req.method === "OPTIONS") {
-    console.log("🛰️ Preflight OPTIONS OK");
-    return res.sendStatus(204);
-  }
-
-  next();
-}) as express.RequestHandler);
 
 // Middleware pour parser les cookies
 app.use(cookieParser());
