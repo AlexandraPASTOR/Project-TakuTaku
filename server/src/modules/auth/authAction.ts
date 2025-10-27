@@ -56,6 +56,10 @@ const signIn = async (request: Request, response: Response): Promise<any> => {
 
 // Inscription d'un utilisateur (sign up)
 const signUp = async (request: Request, response: Response): Promise<any> => {
+
+  response.setHeader("Access-Control-Allow-Origin", process.env.CLIENT_URL!);
+response.setHeader("Access-Control-Allow-Headers", "Content-Type");
+
   // Récupération des données envoyées depuis le client via le formulaire et insertion dans le corps de la requête
   const {
     firstname,
