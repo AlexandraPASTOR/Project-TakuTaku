@@ -86,6 +86,7 @@ const signUp = async (request: Request, response: Response): Promise<any> => {
   }
 
   return response
+  .status(201)
   .send({
     message: "Utilisateur inscrit avec succès",
     userId,
