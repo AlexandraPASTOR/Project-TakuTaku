@@ -15,12 +15,12 @@ const app = express();
 app.use(cookieParser());
 
 // Configuration CORS qui permet les requêtes depuis le client
-if (process.env.CLIENT_URL != null) {
   app.use(cors({
     origin: process.env.CLIENT_URL,
-    credentials: true
+    credentials: true,
+    methods: ['GET', 'POST', 'PUT', 'DELETE'],
+    allowedHeaders: ['Content-Type', 'Authorization']
   }));
-}
 
 // Middleware pour accepter différents types de requêtes
 app.use(express.json());
