@@ -22,5 +22,6 @@ export const checkEmailExists = async (
   } catch (error) {
     console.error("Erreur lors de la vérification de l'adresse e-mail", error);
     res.status(500).send({ message: "Erreur interne du serveur" });
+    return;
   }
 };

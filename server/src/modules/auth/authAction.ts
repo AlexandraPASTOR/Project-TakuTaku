@@ -56,47 +56,50 @@ const signIn = async (request: Request, response: Response): Promise<any> => {
 
 // Inscription d'un utilisateur (sign up)
 const signUp = async (request: Request, response: Response): Promise<any> => {
+  try {
+    const {
+      firstname,
+      lastname,
+      mail,
+      password,
+      abonnement_id,
+      is_actif,
+      is_admin,
+    } = request.body;
 
-  response.setHeader("Access-Control-Allow-Origin", process.env.CLIENT_URL!);
-response.setHeader("Access-Control-Allow-Headers", "Content-Type");
+    const passHash = bcrypt.hashSync(password, 8);
 
-  // Récupération des données envoyées depuis le client via le formulaire et insertion dans le corps de la requête
-  const {
-    firstname,
-    lastname,
-    mail,
-    password,
-    abonnement_id,
-    is_actif,
-    is_admin,
-  } = request.body;
-  const passHash = bcrypt.hashSync(password, 8);
+    const userId = await authRepository.signUp(
+      firstname,
+      lastname,
+      mail,
+      passHash,
+      abonnement_id,
+      is_admin,
+      is_actif,
+      1,
+    );
 
-  const userId = await authRepository.signUp(
-    firstname,
-    lastname,
-    mail,
-    passHash,
-    abonnement_id,
-    is_admin,
-    is_actif,
-    1, // profilpicture_id par défaut
-  );
+    if (!userId) {
+      return response.status(500).json({
+        message: "Utilisateur créé mais non retrouvé",
+      });
+    }
 
-  if (!userId) {
-    return response
-      .status(500)
-      .send({ message: "Utilisateur créé mais non retrouvé" });
+    return response.status(201).json({
+      message: "Utilisateur inscrit avec succès",
+      userId,
+    });
+
+  } catch (err: any) {
+    console.error("Erreur signup:", err);
+
+    return response.status(500).json({
+      error: err.message ?? "Erreur lors de l'inscription",
+    });
   }
-
-  return response
-  .status(201)
-  .send({
-    message: "Utilisateur inscrit avec succès",
-    userId,
-  });
-
 };
+
 
   // Deconnexion d'un utilisateur (sign out)
 const signOut = async (_req: Request, res: Response): Promise<any> => {
