@@ -11,9 +11,6 @@ import swaggerSpec from './swagger';
 // Initialisation de l'application Express
 const app = express();
 
-// Middleware pour parser les cookies
-app.use(cookieParser());
-
 // Configuration CORS qui permet les requêtes depuis le client
   app.use(cors({
     origin: process.env.CLIENT_URL,
@@ -22,8 +19,8 @@ app.use(cookieParser());
     allowedHeaders: ['Content-Type', 'Authorization']
   }));
 
-  console.log("CORS allowed origin:", process.env.CLIENT_URL);
-
+// Middleware pour parser les cookies
+app.use(cookieParser());
 
 // Middleware pour accepter différents types de requêtes
 app.use(express.json());
