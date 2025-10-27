@@ -15,9 +15,9 @@ const app = express();
 app.use(cookieParser());
 
 // Configuration CORS qui permet les requêtes depuis le client
-if (process.env.CLIENT_URL != null && process.env.CLIENT_LOCAL_URL != null) {
+if (process.env.CLIENT_URL != null) {
   app.use(cors({
-    origin: [ process.env.CLIENT_URL, process.env.CLIENT_LOCAL_URL ],
+    origin: process.env.CLIENT_URL,
     credentials: true
   }));
 }
