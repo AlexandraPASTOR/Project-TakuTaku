@@ -9,7 +9,6 @@ export type User = {
   is_admin: boolean;
   is_actif: boolean;
   abonnement_id: number;
-  token: string;
   profilpicture_id: number;
 };
 
@@ -110,7 +109,7 @@ export const UserProvider = ({ children }: { children: React.ReactNode }) => {
 
     if (user?.id === id) {
       // C’est le user connecté → on peut le mettre à jour
-      setUser({ ...updatedUser, token: user.token });
+      setUser({ ...updatedUser });
     }
   };
 
@@ -132,7 +131,7 @@ export const UserProvider = ({ children }: { children: React.ReactNode }) => {
       const data = await response.json();
       if (user?.id === id) {
         // C’est le user connecté → on peut le mettre à jour
-        setUser({ ...data, token: user.token });
+        setUser({ ...data });
       }
     } catch (error) {
       console.error("Erreur lors de la suppression de l'utilisateur :", error);

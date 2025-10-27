@@ -54,7 +54,6 @@ const PaymentPopUp: React.FC<PaymentPopUpProps> = ({
       is_actif: true,
       abonnement_id,
       profilpicture_id: 1,
-      token: "",
     };
 
     const response = await createUser(userToCreate);
