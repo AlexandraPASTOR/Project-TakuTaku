@@ -13,12 +13,19 @@ const app = express();
 
 // ✅ CORS GLOBAL, tout en haut avant cookieParser, router, etc.
 app.use(((req, res, next) => {
-  res.header("Access-Control-Allow-Origin", process.env.CLIENT_URL!);
-  res.header("Access-Control-Allow-Credentials", "true");
-  res.header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS");
-  res.header("Access-Control-Allow-Headers", "Content-Type, Authorization");
+   console.log("✅ CORS middleware ACTIF");
+  const allowedOrigin = process.env.CLIENT_URL!;
+  
+  res.setHeader("Access-Control-Allow-Origin", allowedOrigin);
+  res.setHeader("Access-Control-Allow-Credentials", "true");
+  res.setHeader("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS");
+  res.setHeader("Access-Control-Allow-Headers", "Content-Type, Authorization");
+  
+  // ✅ Fix pour Cloudflare/Render
+  res.setHeader("Vary", "Origin");
 
   if (req.method === "OPTIONS") {
+    console.log("🛰️ Preflight OPTIONS OK");
     return res.sendStatus(204);
   }
 
