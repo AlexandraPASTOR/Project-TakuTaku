@@ -78,25 +78,15 @@ const signUp = async (request: Request, response: Response): Promise<any> => {
     is_actif,
   );
 
+response.setHeader("Access-Control-Allow-Origin", process.env.CLIENT_URL!);
+response.setHeader("Access-Control-Allow-Credentials", "true");
+
   if (!userId) {
     return response
       .status(500)
       .send({ message: "Utilisateur créé mais non retrouvé" });
   }
-  // Si un user est cree, un token lui est attribue qui permet de l'identifier lors des futures requetes
-  const token = jwt.sign({ id: userId, is_admin : is_admin }, tokenKey);
-  // Envoie au client un message de succees, le token dauthentification (JWT) et l'identifiant du nouvel utilisateur
-// Renvoi tout l'objet user + token
-response.setHeader("Access-Control-Allow-Origin", process.env.CLIENT_URL!);
-response.setHeader("Access-Control-Allow-Credentials", "true");
   response
-  .cookie("token", token, {
-    httpOnly: true,
-    secure: true,
-    path: "/", // Le cookie est accessible sur tout le site
-    sameSite: "none", // ✅ indispensable pour Vercel ↔ Render
-    maxAge: 24 * 60 * 60 * 1000,
-  })
   .send({
     message: "Utilisateur inscrit avec succès",
     userId,
