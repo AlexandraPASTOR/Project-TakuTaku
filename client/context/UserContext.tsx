@@ -78,15 +78,7 @@ export const UserProvider = ({ children }: { children: React.ReactNode }) => {
         return { success: false, message: `Erreur HTTP : ${response.status}` };
       }
 
-      const createdUser = await response.json();
-
-      if (user?.id === createdUser.id) {
-        // C’est le user connecté → on peut le mettre à jour
-        setUser({ ...createdUser, token: user?.token });
-      }
-
-      setConnected(true);
-
+      
       return { success: true };
     } catch (error) {
       console.error("Erreur lors de la création de l'utilisateur :", error);
