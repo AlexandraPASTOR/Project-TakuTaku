@@ -10,6 +10,7 @@ type Auth = {
   abonnement_id: number;
   is_admin: boolean;
   is_actif: boolean;
+  profilpicture_id: number;
 };
 
 class AuthRepository {
@@ -41,11 +42,12 @@ class AuthRepository {
     abonnement_id: number,
     is_admin: boolean,
     is_actif: boolean,
+    profilpicture_id: number,
   ) {
     // Exécute la requête SQL pour créer un nouvel utilisateur
     const [result] = await databaseClient.query<Result>(
-      "INSERT INTO user (firstname, lastname, mail, password, abonnement_id, is_admin, is_actif) VALUES (?, ?, ?, ?, ?, ?, ?)",
-      [firstname, lastname, mail, passHash, abonnement_id, is_admin, is_actif],
+      "INSERT INTO user (firstname, lastname, mail, password, abonnement_id, is_admin, is_actif, profilpicture_id) VALUES (?, ?, ?, ?, ?, ?, ?, ?)",
+      [firstname, lastname, mail, passHash, abonnement_id, is_admin, is_actif, profilpicture_id],
     );
     return result.insertId; // Retourne l'ID du nouvel utilisateur inséré
   }

@@ -76,6 +76,7 @@ const signUp = async (request: Request, response: Response): Promise<any> => {
     abonnement_id,
     is_admin,
     is_actif,
+    1, // profilpicture_id par défaut
   );
 
 response.setHeader("Access-Control-Allow-Origin", process.env.CLIENT_URL!);
