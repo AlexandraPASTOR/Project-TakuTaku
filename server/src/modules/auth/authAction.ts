@@ -86,7 +86,9 @@ const signUp = async (request: Request, response: Response): Promise<any> => {
   // Si un user est cree, un token lui est attribue qui permet de l'identifier lors des futures requetes
   const token = jwt.sign({ id: userId, is_admin : is_admin }, tokenKey);
   // Envoie au client un message de succees, le token dauthentification (JWT) et l'identifiant du nouvel utilisateur
-  // Renvoyer tout l'objet user + token
+// Renvoi tout l'objet user + token
+response.setHeader("Access-Control-Allow-Origin", process.env.CLIENT_URL!);
+response.setHeader("Access-Control-Allow-Credentials", "true");
   response
   .cookie("token", token, {
     httpOnly: true,
